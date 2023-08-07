@@ -1,0 +1,36 @@
+{
+  "name": "readmeq",
+  "version": "1.0.0",
+  "description": "README.md file (not only) modifier",
+  "type": "module",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kostixdev/readmeq.git"
+  },
+  "files": [
+    "src/index.js"
+  ],
+  "keywords": [
+    "readme",
+    "keys",
+    "modify"
+  ],
+  "author": "kostix.dev",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/kostixdev/readmeq/issues"
+  },
+  "homepage": "https://github.com/kostixdev/readmeq#readme",
+  "devDependencies": {
+    "@babel/core": "^7.22.9",
+    "@babel/preset-env": "^7.22.9",
+    "babel-jest": "^29.6.2",
+    "jest": "^29.6.2",
+    "jest-environment-jsdom": "^29.6.2",
+    "ts-node": "^10.9.1"
+  }
+}
