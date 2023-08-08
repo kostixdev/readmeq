@@ -1,9 +1,10 @@
-import {promises as fs} from 'fs';
-import {modifyReadmeqSingle} from '../src';
+import {promises as fs, existsSync} from 'fs';
+import {modifyReadmeqSingle, backupReadmeq} from '../src';
 
 
 const testFilePath = './test/README.md';
 
+const tesingFilesPaths = [];
 
 const constructTestingFile = async () => {
   try{
@@ -19,14 +20,16 @@ someOtherKey data inside
 <!--/READMEQ:someOtherKey-->
     `;
     await fs.writeFile(testFilePath, testData, 'utf8' );
+    tesingFilesPaths.push(testFilePath);
   } catch (error) {
     throw error;
   }
 };
 
-const destroyTestingFile = async () => {
+const destroyTestingFiles = async () => {
   try{
-    await fs.unlink(testFilePath);
+    tesingFilesPaths.forEach(async filePath => await fs.unlink(filePath));
+    // await fs.unlink(testFilePath);
   } catch (error) {
     throw error;
   }
@@ -46,7 +49,18 @@ describe('basic readmeq functionality', () => {
       n: true,
       filePath: testFilePath
     });
+
     expect(result).toBe(true);
+
+  });
+
+  test('backup file', async () => {
+
+    const backupPath = await backupReadmeq(testFilePath);
+    tesingFilesPaths.push(backupPath);
+    const exists = existsSync(backupPath);
+
+    expect(exists).toBeTruthy();
 
   });
 
@@ -54,5 +68,5 @@ describe('basic readmeq functionality', () => {
 
 
 afterAll(async () => {
-  await destroyTestingFile();
+  await destroyTestingFiles();
 });
