@@ -1,6 +1,6 @@
 {
   "name": "readmeq",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "Just another one solution for modifying your README.md (not only) file",
   "type": "module",
   "main": "src/index.js",

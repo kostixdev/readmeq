@@ -38,7 +38,16 @@ someOtherData(MODIFIED)
 </dd>
 <dt><a href="#backupReadmeq">backupReadmeq(filePath, options)</a> ⇒ <code>string</code></dt>
 <dd><p>Backup readmeq modified file.
-Use this method when its important to have <strong>previous versions</strong> of modified file. Or <strong>any other cases</strong> when its needed.</p>
+Use this method when its important to have <strong>previous versions</strong> of modified file. Or <strong>any other cases</strong> when its needed. 
+Use this method <strong>on your own risk</strong>.</p>
+</dd>
+<dt><a href="#restoreReadmeqLatest">restoreReadmeqLatest(filePath, backupBeforeRestore, options)</a> ⇒ <code>boolean</code></dt>
+<dd><p>Restore latest version of readmeq modified file. Based on its backup suffix.
+Use this method <strong>on your own risk</strong>.</p>
+</dd>
+<dt><a href="#restoreReadmeqFromPath">restoreReadmeqFromPath(filePath, backupFilePath, backupBeforeRestore, options)</a> ⇒ <code>boolean</code></dt>
+<dd><p>Restore version of readmeq modified file from specific path.
+Use this method <strong>on your own risk</strong>.</p>
 </dd>
 </dl>
 
@@ -71,15 +80,47 @@ Modify single `key` section.
 
 ## backupReadmeq(filePath, options) ⇒ <code>string</code>
 Backup readmeq modified file.
-Use this method when its important to have **previous versions** of modified file. Or **any other cases** when its needed.
+Use this method when its important to have **previous versions** of modified file. Or **any other cases** when its needed. 
+Use this method **on your own risk**.
 
 **Kind**: global function  
 **Returns**: <code>string</code> - backup file path (or throw some error)  
 
-| Param | Type | Description |
-| --- | --- | --- |
-| filePath | <code>string</code> | path to file |
-| options | [<code>backupOptions</code>](#backupOptions) | additional backup options |
+| Param | Type | Default | Description |
+| --- | --- | --- | --- |
+| filePath | <code>string</code> |  | path to file |
+| options | [<code>backupOptions</code>](#backupOptions) | <code>backupOptions</code> | additional backup options |
+
+<a name="restoreReadmeqLatest"></a>
+
+## restoreReadmeqLatest(filePath, backupBeforeRestore, options) ⇒ <code>boolean</code>
+Restore latest version of readmeq modified file. Based on its backup suffix.
+Use this method **on your own risk**.
+
+**Kind**: global function  
+**Returns**: <code>boolean</code> - file restored (or throw some error)  
+
+| Param | Type | Default | Description |
+| --- | --- | --- | --- |
+| filePath | <code>string</code> |  | path to file |
+| backupBeforeRestore | <code>boolean</code> | <code>true</code> | backup current version of `filePath` before its restore |
+| options | [<code>backupOptions</code>](#backupOptions) | <code>backupOptions</code> | additional backup options |
+
+<a name="restoreReadmeqFromPath"></a>
+
+## restoreReadmeqFromPath(filePath, backupFilePath, backupBeforeRestore, options) ⇒ <code>boolean</code>
+Restore version of readmeq modified file from specific path.
+Use this method **on your own risk**.
+
+**Kind**: global function  
+**Returns**: <code>boolean</code> - file restored (or throw some error)  
+
+| Param | Type | Default | Description |
+| --- | --- | --- | --- |
+| filePath | <code>string</code> |  | path to file |
+| backupFilePath | <code>string</code> |  | path to its backup file |
+| backupBeforeRestore | <code>boolean</code> | <code>true</code> | backup current version of `filePath` before its restore |
+| options | [<code>backupOptions</code>](#backupOptions) | <code>backupOptions</code> | additional backup options |
 
 <a name="backupOptions"></a>
 
@@ -93,7 +134,8 @@ Backup options.
 | --- | --- | --- | --- |
 | basePath | <code>string</code> | <code>&quot;&#x60;process.cwd()&#x60;&quot;</code> | projects base/root path |
 | backupsPath | <code>string</code> | <code>&quot;&#x60;path.join(basePath,&#x27;.readmeqBackups&#x27;)&#x60;&quot;</code> | backups path |
-| backupSufix | <code>string</code> | <code>&quot;&#x60;_backup${Date.now()}&#x60;&quot;</code> | backup file suffix (`file.ext` => `file${backupSufix}.ext`) |
+| backupSuffix | <code>string</code> | <code>&quot;&#x60;_backup${Date.now()}&#x60;&quot;</code> | backup file suffix (`file.ext` => `file${backupSuffix}.ext`) |
+| backupSuffixMatch | <code>string</code> | <code>&quot;&#x60;_backup([0-9]+)&#x60;&quot;</code> | backup file suffing pattern (`RegEx`), where `([0-9]+)` -  uniq time-based **integer** (**!important**) id of its backup version |
 
 <a name="modifyOptions"></a>
 
@@ -106,8 +148,8 @@ Modify options.
 | Name | Type | Default | Description |
 | --- | --- | --- | --- |
 | filePath | <code>string</code> | <code>&quot;./README.md&quot;</code> | path to modified file |
-| sectionStart | <code>string</code> | <code>&quot;&lt;!--READMEQ:KEY_VALUE--&gt;&quot;</code> | section start pattern, where `KEY_NAME` - your section key |
-| sectionEnd | <code>string</code> | <code>&quot;&lt;!--/READMEQ:KEY_VALUE--&gt;&quot;</code> | section end pattern, where `KEY_NAME` - your section key |
+| sectionStart | <code>string</code> | <code>&quot;&lt;!--READMEQ:KEY_VALUE--&gt;&quot;</code> | section start pattern,  where `KEY_NAME` (**!important**) - your section key |
+| sectionEnd | <code>string</code> | <code>&quot;&lt;!--/READMEQ:KEY_VALUE--&gt;&quot;</code> | section end pattern,  where `KEY_NAME` (**!important**) - your section key |
 | n | <code>boolean</code> | <code>false</code> | insert `newData` from new line (`\n` on start/end) |
 | backup | <code>boolean</code> | <code>false</code> | apply `backupReadmeq` method mefore modifying |
 | backupOptions | [<code>backupOptions</code>](#backupOptions) |  | applying to `backupReadmeq` method if `backup=true` |
@@ -119,7 +161,8 @@ Modify options.
 ## TODO:
 
   - [ ] mk mass modifying
-  - [ ] move backup to separate module (+add restore functionality)
+  - [ ] move backup/restore to separate module
+  - [ ] apply some pattern to reach `returns` data (not only)
 
 
 

@@ -1,13 +1,21 @@
 import {promises as fs, existsSync} from 'fs';
-import {modifyReadmeqSingle, backupReadmeq} from '../src';
+import {
+  modifyReadmeqSingle,
+  backupReadmeq,
+  restoreReadmeqLatest,
+  restoreReadmeqFromPath
+} from '../src';
 
 
 const testFilePath = './test/README.md';
+const testFileBackupPath = './test/READMEBACKUP.md';
+
 
 const tesingFilesPaths = [];
 
 const constructTestingFile = async () => {
   try{
+    
     const testData = `
 # readmeq test file
 
@@ -21,6 +29,21 @@ someOtherKey data inside
     `;
     await fs.writeFile(testFilePath, testData, 'utf8' );
     tesingFilesPaths.push(testFilePath);
+
+    const testBackupData = `
+# readmeq backup test file
+
+<!--READMEQ:singleKey-->
+singleKey data
+<!--/READMEQ:singleKey-->
+
+<!--READMEQ:someOtherKey-->
+someOtherKey data inside
+<!--/READMEQ:someOtherKey-->
+    `;
+    await fs.writeFile(testFileBackupPath, testBackupData, 'utf8' );
+    tesingFilesPaths.push(testFileBackupPath);
+
   } catch (error) {
     throw error;
   }
@@ -29,7 +52,6 @@ someOtherKey data inside
 const destroyTestingFiles = async () => {
   try{
     tesingFilesPaths.forEach(async filePath => await fs.unlink(filePath));
-    // await fs.unlink(testFilePath);
   } catch (error) {
     throw error;
   }
@@ -43,7 +65,17 @@ beforeAll( async () => {
 
 describe('basic readmeq functionality', () => {
 
-  test('single key', async () => {
+  test('backup file', async () => {
+
+    const backupPath = await backupReadmeq(testFilePath);
+    tesingFilesPaths.push(backupPath);
+    const exists = existsSync(backupPath);
+
+    expect(exists).toBeTruthy();
+
+  });
+
+  test('modify single key', async () => {
 
     const result = await modifyReadmeqSingle('singleKey', 'singleKey data MODIFIED', {
       n: true,
@@ -54,13 +86,19 @@ describe('basic readmeq functionality', () => {
 
   });
 
-  test('backup file', async () => {
+  test('restore file from latest backup', async () => {
 
-    const backupPath = await backupReadmeq(testFilePath);
-    tesingFilesPaths.push(backupPath);
-    const exists = existsSync(backupPath);
+    const result = await restoreReadmeqLatest(testFilePath, false);
 
-    expect(exists).toBeTruthy();
+    expect(result).toBe(true);
+
+  });
+
+  test('restore file from specific backup', async () => {
+
+    const result = await restoreReadmeqFromPath(testFilePath, testFileBackupPath, false);
+
+    expect(result).toBe(true);
 
   });
 
