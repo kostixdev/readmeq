@@ -1,8 +1,9 @@
+readmeq / [Exports](modules.md)
+
 # readmeq
 > Just another one solution for modifying your `README.md` (not only) file.
 
 Can be useful if you want to **modify some parts** of your `README.md` (not only) file on any step of `build`, `commit`, `pre-comit`, etc.
-
 
 ## Usage:
 
@@ -34,18 +35,13 @@ Check documentation [here][docs-url]
 ... 
 <!--/READMEQ:docsSection-->
 
-
 ## TODO:
 
   - [ ] mk mass modifying
   - [ ] move backup/restore to separate module
 
-
-
 ---
 © [kostix.dev][kostix-url]
-
-
 
 [kostix-url]: https://kostix.dev
 
