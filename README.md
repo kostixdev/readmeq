@@ -28,132 +28,212 @@ someOtherData(MODIFIED)
 <!--/READMEQ:someKey-->
 ```
 
-
+## Documantation:
+Check documentation [here][docs-url]
 <!--READMEQ:docsSection-->
+### Type Aliases
+
+- [BackupOptions](modules.md#backupoptions)
+- [FilePath](modules.md#filepath)
+- [ModifyOptions](modules.md#modifyoptions)
+- [Result](modules.md#result)
+
+### Functions
+
+- [backupReadmeq](modules.md#backupreadmeq)
+- [modifyReadmeqSingle](modules.md#modifyreadmeqsingle)
+- [restoreReadmeqFromPath](modules.md#restorereadmeqfrompath)
+- [restoreReadmeqLatest](modules.md#restorereadmeqlatest)
+
+## Type Aliases
+
+### BackupOptions
+
+Ƭ **BackupOptions**: `Object`
+
+Backup options.
+
+#### Type declaration
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `backupSuffix` | `string` | backup file suffix (`file.ext` => `file${backupSuffix}.ext`) **`Default`** `_backup${Date.now()}` |
+| `backupSuffixMatch` | `string` | backup file suffing pattern (`RegEx`), where `([0-9]+)` - uniq time-based **integer** (**!important**) id of its backup version **`Default`** `_backup([0-9]+)` |
+| `backupsPath` | `string` | projects base/root path **`Default`** `${path.join(basePath,'.readmeqBackups')}` |
+| `basePath` | `string` | projects base/root path **`Default`** `${process.cwd()}` |
+
+#### Defined in
+
+[index.ts:17](https://github.com/kostixdev/readmeq/blob/430a28f/src/index.ts#L17)
+
+___
+
+### FilePath
+
+Ƭ **FilePath**: `string`
+
+filePath data type (string)
+
+#### Defined in
+
+[index.ts:96](https://github.com/kostixdev/readmeq/blob/430a28f/src/index.ts#L96)
+
+___
+
+### ModifyOptions
+
+Ƭ **ModifyOptions**: `Object`
+
+Modify options.
+
+#### Type declaration
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `backup` | `boolean` | apply `backupReadmeq` method mefore modifying **`Default`** ```ts false ``` |
+| `backupOptions` | [`BackupOptions`](modules.md#backupoptions) | applying to `backupReadmeq` method if `backup=true` **`Default`** ```ts backupOptions ``` |
+| `filePath` | `string` | path to modified file **`Default`** ```ts './README.md' ``` |
+| `n` | `boolean` | insert `newData` from new line (`\n` on start/end) **`Default`** ```ts false ``` |
+| `sectionEnd` | `string` | section end pattern, where `KEY_NAME` (**!important**) - your section key **`Default`** ```ts '<!--/READMEQ:KEY_VALUE-->' ``` |
+| `sectionStart` | `string` | section start pattern, where `KEY_NAME` (**!important**) - your section key **`Default`** ```ts '<!--READMEQ:KEY_VALUE-->' ``` |
+
+#### Defined in
+
+[index.ts:51](https://github.com/kostixdev/readmeq/blob/430a28f/src/index.ts#L51)
+
+___
+
+### Result
+
+Ƭ **Result**<`T`\>: { `status`: ``"ok"`` ; `value`: `T`  } \| { `error`: `Error` ; `status`: ``"error"``  }
+
+Result to return
+
+#### Type parameters
+
+| Name | Description |
+| :------ | :------ |
+| `T` | value type of `status: 'ok'` |
+
+#### Defined in
+
+[index.ts:102](https://github.com/kostixdev/readmeq/blob/430a28f/src/index.ts#L102)
+
 ## Functions
 
-<dl>
-<dt><a href="#modifyReadmeqSingle">modifyReadmeqSingle(key, newData, options)</a> ⇒ <code>boolean</code></dt>
-<dd><p>Modify single <code>key</code> section.</p>
-</dd>
-<dt><a href="#backupReadmeq">backupReadmeq(filePath, options)</a> ⇒ <code>string</code></dt>
-<dd><p>Backup readmeq modified file.
-Use this method when its important to have <strong>previous versions</strong> of modified file. Or <strong>any other cases</strong> when its needed. 
-Use this method <strong>on your own risk</strong>.</p>
-</dd>
-<dt><a href="#restoreReadmeqLatest">restoreReadmeqLatest(filePath, backupBeforeRestore, options)</a> ⇒ <code>boolean</code></dt>
-<dd><p>Restore latest version of readmeq modified file. Based on its backup suffix.
-Use this method <strong>on your own risk</strong>.</p>
-</dd>
-<dt><a href="#restoreReadmeqFromPath">restoreReadmeqFromPath(filePath, backupFilePath, backupBeforeRestore, options)</a> ⇒ <code>boolean</code></dt>
-<dd><p>Restore version of readmeq modified file from specific path.
-Use this method <strong>on your own risk</strong>.</p>
-</dd>
-</dl>
+### backupReadmeq
 
-## Typedefs
+▸ **backupReadmeq**(`filePath`, `options?`): `Promise`<[`Result`](modules.md#result)<`string`\>\>
 
-<dl>
-<dt><a href="#backupOptions">backupOptions</a> : <code>Object</code></dt>
-<dd><p>Backup options.</p>
-</dd>
-<dt><a href="#modifyOptions">modifyOptions</a> : <code>Object</code></dt>
-<dd><p>Modify options.</p>
-</dd>
-</dl>
+Backup readmeq modified file.
+Use this method when its important to have **previous versions** of modified file. Or **any other cases** when its needed.
+Use this method **on your own risk**.
 
-<a name="modifyReadmeqSingle"></a>
+#### Parameters
 
-## modifyReadmeqSingle(key, newData, options) ⇒ <code>boolean</code>
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `filePath` | `string` | path to file |
+| `options?` | `Partial`<[`BackupOptions`](modules.md#backupoptions)\> | - |
+
+#### Returns
+
+`Promise`<[`Result`](modules.md#result)<`string`\>\>
+
+backup file path (or throw some error)
+
+**`Async`**
+
+#### Defined in
+
+[index.ts:194](https://github.com/kostixdev/readmeq/blob/430a28f/src/index.ts#L194)
+
+___
+
+### modifyReadmeqSingle
+
+▸ **modifyReadmeqSingle**(`key`, `newData`, `options?`): `Promise`<[`Result`](modules.md#result)<`boolean`\>\>
+
 Modify single `key` section.
 
-**Kind**: global function  
-**Returns**: <code>boolean</code> - file modified (or throw some error)  
+#### Parameters
 
-| Param | Type | Description |
-| --- | --- | --- |
-| key | <code>string</code> | section key |
-| newData | <code>string</code> | section data |
-| options | [<code>modifyOptions</code>](#modifyOptions) | additional modify options |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `key` | `string` | section key |
+| `newData` | `string` | section data |
+| `options?` | `Partial`<[`ModifyOptions`](modules.md#modifyoptions)\> | - |
 
-<a name="backupReadmeq"></a>
+#### Returns
 
-## backupReadmeq(filePath, options) ⇒ <code>string</code>
-Backup readmeq modified file.
-Use this method when its important to have **previous versions** of modified file. Or **any other cases** when its needed. 
-Use this method **on your own risk**.
+`Promise`<[`Result`](modules.md#result)<`boolean`\>\>
 
-**Kind**: global function  
-**Returns**: <code>string</code> - backup file path (or throw some error)  
+file modified (or throw some error)
 
-| Param | Type | Default | Description |
-| --- | --- | --- | --- |
-| filePath | <code>string</code> |  | path to file |
-| options | [<code>backupOptions</code>](#backupOptions) | <code>backupOptions</code> | additional backup options |
+**`Async`**
 
-<a name="restoreReadmeqLatest"></a>
+#### Defined in
 
-## restoreReadmeqLatest(filePath, backupBeforeRestore, options) ⇒ <code>boolean</code>
-Restore latest version of readmeq modified file. Based on its backup suffix.
-Use this method **on your own risk**.
+[index.ts:124](https://github.com/kostixdev/readmeq/blob/430a28f/src/index.ts#L124)
 
-**Kind**: global function  
-**Returns**: <code>boolean</code> - file restored (or throw some error)  
+___
 
-| Param | Type | Default | Description |
-| --- | --- | --- | --- |
-| filePath | <code>string</code> |  | path to file |
-| backupBeforeRestore | <code>boolean</code> | <code>true</code> | backup current version of `filePath` before its restore |
-| options | [<code>backupOptions</code>](#backupOptions) | <code>backupOptions</code> | additional backup options |
+### restoreReadmeqFromPath
 
-<a name="restoreReadmeqFromPath"></a>
+▸ **restoreReadmeqFromPath**(`filePath`, `backupFilePath`, `backupBeforeRestore?`, `options?`): `Promise`<[`Result`](modules.md#result)<`boolean`\>\>
 
-## restoreReadmeqFromPath(filePath, backupFilePath, backupBeforeRestore, options) ⇒ <code>boolean</code>
 Restore version of readmeq modified file from specific path.
 Use this method **on your own risk**.
 
-**Kind**: global function  
-**Returns**: <code>boolean</code> - file restored (or throw some error)  
+#### Parameters
 
-| Param | Type | Default | Description |
-| --- | --- | --- | --- |
-| filePath | <code>string</code> |  | path to file |
-| backupFilePath | <code>string</code> |  | path to its backup file |
-| backupBeforeRestore | <code>boolean</code> | <code>true</code> | backup current version of `filePath` before its restore |
-| options | [<code>backupOptions</code>](#backupOptions) | <code>backupOptions</code> | additional backup options |
+| Name | Type | Default value | Description |
+| :------ | :------ | :------ | :------ |
+| `filePath` | `string` | `undefined` | path to file |
+| `backupFilePath` | `string` | `undefined` | path to its backup file |
+| `backupBeforeRestore` | `boolean` | `true` | - |
+| `options?` | `Partial`<[`BackupOptions`](modules.md#backupoptions)\> | `undefined` | - |
 
-<a name="backupOptions"></a>
+#### Returns
 
-## backupOptions : <code>Object</code>
-Backup options.
+`Promise`<[`Result`](modules.md#result)<`boolean`\>\>
 
-**Kind**: global typedef  
-**Properties**
+file restored (or throw some error)
 
-| Name | Type | Default | Description |
-| --- | --- | --- | --- |
-| basePath | <code>string</code> | <code>&quot;&#x60;process.cwd()&#x60;&quot;</code> | projects base/root path |
-| backupsPath | <code>string</code> | <code>&quot;&#x60;path.join(basePath,&#x27;.readmeqBackups&#x27;)&#x60;&quot;</code> | backups path |
-| backupSuffix | <code>string</code> | <code>&quot;&#x60;_backup${Date.now()}&#x60;&quot;</code> | backup file suffix (`file.ext` => `file${backupSuffix}.ext`) |
-| backupSuffixMatch | <code>string</code> | <code>&quot;&#x60;_backup([0-9]+)&#x60;&quot;</code> | backup file suffing pattern (`RegEx`), where `([0-9]+)` -  uniq time-based **integer** (**!important**) id of its backup version |
+**`Async`**
 
-<a name="modifyOptions"></a>
+#### Defined in
 
-## modifyOptions : <code>Object</code>
-Modify options.
+[index.ts:329](https://github.com/kostixdev/readmeq/blob/430a28f/src/index.ts#L329)
 
-**Kind**: global typedef  
-**Properties**
+___
 
-| Name | Type | Default | Description |
-| --- | --- | --- | --- |
-| filePath | <code>string</code> | <code>&quot;./README.md&quot;</code> | path to modified file |
-| sectionStart | <code>string</code> | <code>&quot;&lt;!--READMEQ:KEY_VALUE--&gt;&quot;</code> | section start pattern,  where `KEY_NAME` (**!important**) - your section key |
-| sectionEnd | <code>string</code> | <code>&quot;&lt;!--/READMEQ:KEY_VALUE--&gt;&quot;</code> | section end pattern,  where `KEY_NAME` (**!important**) - your section key |
-| n | <code>boolean</code> | <code>false</code> | insert `newData` from new line (`\n` on start/end) |
-| backup | <code>boolean</code> | <code>false</code> | apply `backupReadmeq` method mefore modifying |
-| backupOptions | [<code>backupOptions</code>](#backupOptions) |  | applying to `backupReadmeq` method if `backup=true` |
+### restoreReadmeqLatest
 
+▸ **restoreReadmeqLatest**(`filePath`, `backupBeforeRestore?`, `options?`): `Promise`<[`Result`](modules.md#result)<`boolean`\>\>
+
+Restore latest version of readmeq modified file. Based on its backup suffix.
+Use this method **on your own risk**.
+
+#### Parameters
+
+| Name | Type | Default value | Description |
+| :------ | :------ | :------ | :------ |
+| `filePath` | `string` | `undefined` | path to file |
+| `backupBeforeRestore` | `boolean` | `true` | - |
+| `options?` | `Partial`<[`BackupOptions`](modules.md#backupoptions)\> | `undefined` | - |
+
+#### Returns
+
+`Promise`<[`Result`](modules.md#result)<`boolean`\>\>
+
+file restored (or throw some error)
+
+**`Async`**
+
+#### Defined in
+
+[index.ts:244](https://github.com/kostixdev/readmeq/blob/430a28f/src/index.ts#L244)
 
 <!--/READMEQ:docsSection-->
 
@@ -162,7 +242,6 @@ Modify options.
 
   - [ ] mk mass modifying
   - [ ] move backup/restore to separate module
-  - [ ] apply some pattern to reach `returns` data (not only)
 
 
 
@@ -172,3 +251,5 @@ Modify options.
 
 
 [kostix-url]: https://kostix.dev
+
+[docs-url]: docs/README.md

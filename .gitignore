@@ -8,6 +8,7 @@ package-lock.json
 .vscode
 
 coverage
-test/README.md
 
 .readmeqBackups
+
+build
