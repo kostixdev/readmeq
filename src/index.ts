@@ -11,15 +11,6 @@ const backupsPath: string = path.join(basePath, '.readmeqBackups');
 const backupSuffix = `_backup${Date.now()}`;
 const backupSuffixMatch = '_backup([0-9]+)';
 
-// /**
-//  * Backup options.
-//  * @typedef {Object} BackupOptions
-//  * @property {string} basePath=`process.cwd()` - projects base/root path
-//  * @property {string} backupsPath=`path.join(basePath,'.readmeqBackups')` - backups path
-//  * @property {string} backupSuffix=`_backup${Date.now()}` - backup file suffix (`file.ext` => `file${backupSuffix}.ext`)
-//  * @property {string} backupSuffixMatch=`_backup([0-9]+)` - backup file suffing pattern (`RegEx`), where `([0-9]+)` -
-//  * uniq time-based **integer** (**!important**) id of its backup version
-//  */
 /**
  * Backup options.
  */
@@ -53,18 +44,6 @@ const backupOptionsDefault: BackupOptions = {
   backupSuffixMatch,
 };
 
-// /**
-//  * Modify options.
-//  * @typedef {Object} ModifyOptions
-//  * @property {string} filePath=./README.md - path to modified file
-//  * @property {string} sectionStart=<!--READMEQ:KEY_VALUE--> - section start pattern,
-//  * where `KEY_NAME` (**!important**) - your section key
-//  * @property {string} sectionEnd=<!--/READMEQ:KEY_VALUE--> - section end pattern,
-//  * where `KEY_NAME` (**!important**) - your section key
-//  * @property {boolean} n=false - insert `newData` from new line (`\n` on start/end)
-//  * @property {boolean} backup=false - apply `backupReadmeq` method mefore modifying
-//  * @property {BackupOptions} backupOptions=backupOptionsDefault - applying to `backupReadmeq` method if `backup=true`
-//  */
 /**
  * Modify options.
  * @type ModifyOptions
